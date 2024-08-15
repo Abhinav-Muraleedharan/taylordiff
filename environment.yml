@@ -3,12 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.9
-  - pip
-  - jax
-  - jaxlib
-  - flax
-  - optax
+  - python
   - numpy
   - matplotlib
   - pyyaml
