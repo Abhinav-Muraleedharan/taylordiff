@@ -1,9 +1,13 @@
+import os
 import jax
-import jax.numpy as jnp
 import optax
-from flax.training import train_state
-from tqdm import tqdm
 import wandb
+import jax.numpy as jnp
+from tqdm import tqdm
+from flax.training import checkpoints
+from flax.training import train_state
+
+
 
 from models import get_model
 from .utils import plot_loss_curves, plot_spectral_dynamics, log_attention_heatmaps
@@ -43,6 +47,9 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
     rng, init_rng = jax.random.split(rng)
 
     state = create_train_state(init_rng, config, vocab_size)
+    model_name = config['model']['type']
+    checkpoint_dir = os.path.join('experiments', 'model_checkpoints', model_name)
+    os.makedirs(checkpoint_dir, exist_ok=True)
 
     train_losses = []
     val_losses = []
@@ -68,6 +75,16 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
         val_losses.append(val_loss)
 
         print(f"Epoch {epoch+1}: Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+
+        # save checkpoint:
+        checkpoints.save_checkpoint(
+            ckpt_dir=checkpoint_dir,
+            target=state,
+            step=epoch,
+            keep=3,  # Keep the 3 best checkpoints
+            overwrite=True
+        )
+        print("Succesfully saved checkpoint")
 
         wandb.log({
             "epoch": epoch + 1,
