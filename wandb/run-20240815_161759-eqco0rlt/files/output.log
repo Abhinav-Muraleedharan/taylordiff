@@ -1,0 +1,31 @@
+Map: 100%|██████████████████████████████████████████████████████████████████████████████| 4358/4358 [00:00<00:00, 11504.35 examples/s]
+
+Map: 100%|████████████████████████████████████████████████████████████████████████████| 36718/36718 [00:02<00:00, 12641.61 examples/s]
+Map: 100%|██████████████████████████████████████████████████████████████████████████████| 3760/3760 [00:00<00:00, 13342.67 examples/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 18, in <module>
+    main()
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 13, in main
+    trained_state = train_model(config, train_dataset, val_dataset, vocab_size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 45, in train_model
+    state = create_train_state(init_rng, config, vocab_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 22, in create_train_state
+    params = model.init(rng, dummy_input, training=False)['params']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 127, in __call__
+    x = TransformerBlock(
+        ^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 102, in __call__
+    attn_output,_ = attention(x,mask=create_causal_mask(seq_length))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 57, in __call__
+    mask = expand_mask(mask)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 23, in expand_mask
+    mask = mask.unsqueeze(0)
+           ^^^^^^^^^^^^^^
+AttributeError: 'jaxlib.xla_extension.ArrayImpl' object has no attribute 'unsqueeze'. Did you mean: 'squeeze'?
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

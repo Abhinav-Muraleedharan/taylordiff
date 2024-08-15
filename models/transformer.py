@@ -53,8 +53,8 @@ class MultiheadAttention(nn.Module):
 
     def __call__(self, x, mask=None):
         batch_size, seq_length, embed_dim = x.shape
-        if mask is not None:
-            mask = expand_mask(mask)
+        # if mask is not None:
+        #     mask = expand_mask(mask)
         qkv = self.qkv_proj(x)
 
         # Separate Q, K, V from linear output
