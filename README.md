@@ -1,26 +1,3 @@
-Project Structure:
-
-taylordiff/
-│
-├── config/
-│   └── config.yaml
-│
-├── src/
-│   ├── __init__.py
-│   ├── data.py
-│   ├── train.py
-│   └── utils.py
-│
-├── models/
-│   ├── __init__.py
-│   ├── transformer.py
-│   ├── gpt2.py
-│   └── gemma.py
-│
-├── requirements.txt
-├── environment.yml
-├── README.md
-└── main.py
 
 
 ## Setup
