@@ -1,0 +1,28 @@
+2024-08-15 14:26:10,680 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Current SDK version is 0.17.6
+2024-08-15 14:26:10,681 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Configure stats pid to 1410582
+2024-08-15 14:26:10,682 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Loading settings from /home/abhi98m/.config/wandb/settings
+2024-08-15 14:26:10,683 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Loading settings from /home/ubuntu/rbg-group/abhi98m/taylordiff/wandb/settings
+2024-08-15 14:26:10,683 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-08-15 14:26:10,684 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-08-15 14:26:10,684 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'main.py', 'program_abspath': '/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py', 'program': '/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py'}
+2024-08-15 14:26:10,686 INFO    MainThread:1410582 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-08-15 14:26:10,687 INFO    MainThread:1410582 [wandb_init.py:_log_setup():521] Logging user logs to /home/ubuntu/rbg-group/abhi98m/taylordiff/wandb/run-20240815_142610-3f0vhca0/logs/debug.log
+2024-08-15 14:26:10,688 INFO    MainThread:1410582 [wandb_init.py:_log_setup():522] Logging internal logs to /home/ubuntu/rbg-group/abhi98m/taylordiff/wandb/run-20240815_142610-3f0vhca0/logs/debug-internal.log
+2024-08-15 14:26:10,690 INFO    MainThread:1410582 [wandb_init.py:init():559] calling init triggers
+2024-08-15 14:26:10,691 INFO    MainThread:1410582 [wandb_init.py:init():566] wandb.init called with sweep_config: {}
+config: {'project': {'name': 'taylordiff'}, 'model': {'type': 'transformer', 'd_model': 256, 'n_heads': 4, 'd_ff': 1024, 'n_layers': 2, 'dropout': 0.1}, 'training': {'batch_size': 32, 'learning_rate': 0.0001, 'num_epochs': 10, 'max_seq_length': 128}, 'data': {'dataset_name': 'wikitext', 'dataset_config': 'wikitext-2-raw-v1'}, 'tokenizer': {'name': 'google/gemma-2b'}}
+2024-08-15 14:26:10,693 INFO    MainThread:1410582 [wandb_init.py:init():609] starting backend
+2024-08-15 14:26:10,694 INFO    MainThread:1410582 [wandb_init.py:init():613] setting up manager
+2024-08-15 14:26:10,698 INFO    MainThread:1410582 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-08-15 14:26:10,699 INFO    MainThread:1410582 [wandb_init.py:init():621] backend started and connected
+2024-08-15 14:26:10,705 INFO    MainThread:1410582 [wandb_init.py:init():716] updated telemetry
+2024-08-15 14:26:10,738 INFO    MainThread:1410582 [wandb_init.py:init():749] communicating run to backend with 90.0 second timeout
+2024-08-15 14:26:10,880 INFO    MainThread:1410582 [wandb_run.py:_on_init():2438] communicating current version
+2024-08-15 14:26:10,900 INFO    MainThread:1410582 [wandb_run.py:_on_init():2447] got version response 
+2024-08-15 14:26:10,901 INFO    MainThread:1410582 [wandb_init.py:init():800] starting run threads in backend
+2024-08-15 14:26:13,023 INFO    MainThread:1410582 [wandb_run.py:_console_start():2416] atexit reg
+2024-08-15 14:26:13,023 INFO    MainThread:1410582 [wandb_run.py:_redirect():2258] redirect: wrap_raw
+2024-08-15 14:26:13,024 INFO    MainThread:1410582 [wandb_run.py:_redirect():2323] Wrapping output streams.
+2024-08-15 14:26:13,024 INFO    MainThread:1410582 [wandb_run.py:_redirect():2348] Redirects installed.
+2024-08-15 14:26:13,026 INFO    MainThread:1410582 [wandb_init.py:init():843] run started, returning control to user process
+2024-08-15 14:26:32,556 WARNING MsgRouterThr:1410582 [router.py:message_loop():77] message_loop has been closed

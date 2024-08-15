@@ -18,7 +18,8 @@ def create_train_state(rng, config, vocab_size):
         n_layers=config['model']['n_layers'],
         dropout=config['model']['dropout']
     )
-    params = model.init(rng, jnp.ones((1, config['training']['max_seq_length'])), training=False)['params']
+    dummy_input = jnp.ones((1, config['training']['max_seq_length']), dtype=jnp.int32)
+    params = model.init(rng, dummy_input, training=False)['params']
     tx = optax.adam(config['training']['learning_rate'])
     return train_state.TrainState.create(apply_fn=model.apply, params=params, tx=tx)
 
@@ -45,9 +46,6 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
 
     train_losses = []
     val_losses = []
-
-    fixed_input = next(train_dataset.iter(batch_size=1))['input_ids']
-    attention_weights_history = []
 
     for epoch in range(config['training']['num_epochs']):
         # Training
@@ -77,12 +75,6 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
             "val_loss": val_loss
         })
 
-        _, attention_weights = state.apply_fn({'params': state.params}, fixed_input, training=False, return_attention=True)
-        attention_weights_history.append([w.numpy() for w in attention_weights])
-
-        log_attention_heatmaps(attention_weights, epoch)
-
     plot_loss_curves(train_losses, val_losses)
-    plot_spectral_dynamics(attention_weights_history)
 
     return state

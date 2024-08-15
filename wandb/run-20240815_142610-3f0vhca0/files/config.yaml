@@ -1,0 +1,65 @@
+wandb_version: 1
+
+project:
+  desc: null
+  value:
+    name: taylordiff
+model:
+  desc: null
+  value:
+    type: transformer
+    d_model: 256
+    n_heads: 4
+    d_ff: 1024
+    n_layers: 2
+    dropout: 0.1
+training:
+  desc: null
+  value:
+    batch_size: 32
+    learning_rate: 0.0001
+    num_epochs: 10
+    max_seq_length: 128
+data:
+  desc: null
+  value:
+    dataset_name: wikitext
+    dataset_config: wikitext-2-raw-v1
+tokenizer:
+  desc: null
+  value:
+    name: google/gemma-2b
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.5
+    cli_version: 0.17.6
+    framework: huggingface
+    huggingface_version: 4.44.0
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1723731970
+    t:
+      1:
+      - 11
+      - 12
+      - 45
+      - 49
+      - 51
+      - 55
+      2:
+      - 11
+      - 12
+      - 45
+      - 49
+      - 51
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.12.5
+      5: 0.17.6
+      6: 4.44.0
+      8:
+      - 5
+      13: linux-x86_64

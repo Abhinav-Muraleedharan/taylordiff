@@ -1,0 +1,24 @@
+
+
+Map: 100%|████████████████████████████████████████████████████████| 36718/36718 [00:02<00:00, 12743.72 examples/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 18, in <module>
+    main()
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 13, in main
+    trained_state = train_model(config, train_dataset, val_dataset, vocab_size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 45, in train_model
+    state = create_train_state(init_rng, config, vocab_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 22, in create_train_state
+    params = model.init(rng, dummy_input, training=False)['params']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 49, in __call__
+    x = TransformerBlock(
+        ^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 12, in __call__
+    attn_output, attention_weights = nn.MultiHeadAttention(num_heads=self.n_heads)(x, x, x, return_attention=True)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MultiHeadDotProductAttention.__call__() got an unexpected keyword argument 'return_attention'
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

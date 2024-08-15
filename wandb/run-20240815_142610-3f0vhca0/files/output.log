@@ -1,0 +1,28 @@
+tokenizer_config.json: 100%|█████████████████████████████████████████████████| 33.6k/33.6k [00:00<00:00, 33.6MB/s]
+tokenizer.model: 100%|███████████████████████████████████████████████████████| 4.24M/4.24M [00:00<00:00, 59.1MB/s]
+tokenizer.json: 100%|█████████████████████████████████████████████████████████| 17.5M/17.5M [00:00<00:00, 198MB/s]
+special_tokens_map.json: 100%|███████████████████████████████████████████████████| 636/636 [00:00<00:00, 4.27MB/s]
+Map: 100%|██████████████████████████████████████████████████████████| 4358/4358 [00:00<00:00, 11913.92 examples/s]
+
+Map: 100%|████████████████████████████████████████████████████████| 36718/36718 [00:03<00:00, 10937.63 examples/s]
+Map: 100%|██████████████████████████████████████████████████████████| 3760/3760 [00:00<00:00, 12480.83 examples/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 18, in <module>
+    main()
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 13, in main
+    trained_state = train_model(config, train_dataset, val_dataset, vocab_size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 44, in train_model
+    state = create_train_state(init_rng, config, vocab_size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 21, in create_train_state
+    params = model.init(rng, jnp.ones((1, config['training']['max_seq_length'])), training=False)['params']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/models/transformer.py", line 36, in __call__
+    x = nn.Embed(num_embeddings=self.vocab_size, features=self.d_model)(x)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/flax/linen/linear.py", line 1125, in __call__
+    raise ValueError('Input type must be an integer or unsigned integer.')
+ValueError: Input type must be an integer or unsigned integer.
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
