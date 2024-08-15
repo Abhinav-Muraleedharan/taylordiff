@@ -6,6 +6,7 @@ from flax.training import train_state
 from flax.training import checkpoints
 import yaml
 from models import get_model
+from transformers import AutoTokenizer
 from src.data import load_and_preprocess_data
 
 def create_model(config, vocab_size):
@@ -57,7 +58,7 @@ def generate(state, config, tokenizer, prompt, max_length=100):
 def main():
     with open('config/config.yaml', 'r') as f:
         config = yaml.safe_load(f)
-
+    tokenizer = AutoTokenizer.from_pretrained(config['tokenizer']['name'])
     _, _, vocab_size = load_and_preprocess_data(config)
     state = load_model(config, vocab_size)
     

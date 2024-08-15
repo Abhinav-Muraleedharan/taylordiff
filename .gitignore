@@ -1,6 +1,9 @@
 # Ignore model checkpoints
 experiments/model_checkpoints/
 
+# Ignore wandb folder
+wandb/
+
 # Ignore Python cache files
 __pycache__/
 *.py[cod]

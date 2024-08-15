@@ -48,7 +48,7 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
 
     state = create_train_state(init_rng, config, vocab_size)
     model_name = config['model']['type']
-    checkpoint_dir = os.path.join('experiments', 'model_checkpoints', model_name)
+    checkpoint_dir = os.path.abspath(os.path.join('experiments', 'model_checkpoints', model_name))
     os.makedirs(checkpoint_dir, exist_ok=True)
 
     train_losses = []

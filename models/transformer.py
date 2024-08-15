@@ -102,7 +102,6 @@ class TransformerBlock(nn.Module):
         attn_output,_ = attention(x,mask=create_causal_mask(seq_length))
         x = x + nn.Dropout(rate=self.dropout)(attn_output, deterministic=not training)
         x = nn.LayerNorm()(x)
-        
         ff_output = nn.Dense(self.d_ff)(x)
         ff_output = nn.gelu(ff_output)
         ff_output = nn.Dense(self.d_model)(ff_output)
