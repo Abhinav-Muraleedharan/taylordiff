@@ -20,4 +20,4 @@ data:
   dataset_config: "wikitext-2-raw-v1"
 
 tokenizer:
-  name: "google/gemma-7b"
+  name: "google/gemma-2b"
