@@ -31,11 +31,11 @@ def load_model(config, vocab_size):
     rng = jax.random.PRNGKey(0)
     state = create_train_state(rng, config, vocab_size)
     model_name = config['model']['type']
-    checkpoint_dir = os.path.join('experiments', 'model_checkpoints', model_name)
-    state = checkpoints.restore_checkpoint(ckpt_dir=checkpoint_dir, target=state, prefix='best_model_')
+    checkpoint_dir = os.path.abspath(os.path.join('experiments', 'model_checkpoints', model_name))
+    state = checkpoints.restore_checkpoint(ckpt_dir=checkpoint_dir, target=state, prefix='checkpoint_7')
     return state
 
-def generate(state, config, tokenizer, prompt, max_length=100):
+def generate(state, config, tokenizer, prompt, max_length=10):
     model = create_model(config, tokenizer.vocab_size)
     
     @jax.jit
@@ -56,7 +56,7 @@ def generate(state, config, tokenizer, prompt, max_length=100):
     return tokenizer.decode(input_ids)
 
 def main():
-    with open('config/config.yaml', 'r') as f:
+    with open('../config/config.yaml', 'r') as f:
         config = yaml.safe_load(f)
     tokenizer = AutoTokenizer.from_pretrained(config['tokenizer']['name'])
     _, _, vocab_size = load_and_preprocess_data(config)
