@@ -18,9 +18,9 @@ def create_causal_mask(seq_length):
 def expand_mask(mask):
     assert mask.ndim >= 2, "Mask must be at least 2-dimensional with seq_length x seq_length"
     if mask.ndim == 3:
-        mask = mask.unsqueeze(1)
+        jnp.expand_dims(mask, axis=1)
     while mask.ndim < 4:
-        mask = mask.unsqueeze(0)
+        jnp.expand_dims(mask, axis=0)
     return mask
 
 
@@ -31,6 +31,7 @@ def scaled_dot_product(q, k, v, mask=None):
     if mask is not None:
         attn_logits = jnp.where(mask == 0, -9e15, attn_logits)
     attention = nn.softmax(attn_logits, axis=-1)
+    print(attention)
     values = jnp.matmul(attention, v)
     return values, attention
 

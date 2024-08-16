@@ -6,9 +6,6 @@ import jax.numpy as jnp
 from tqdm import tqdm
 from flax.training import checkpoints
 from flax.training import train_state
-
-
-
 from models import get_model
 from .utils import plot_loss_curves, plot_spectral_dynamics, log_attention_heatmaps
 

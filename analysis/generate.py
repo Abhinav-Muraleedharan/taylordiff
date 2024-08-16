@@ -32,7 +32,7 @@ def load_model(config, vocab_size):
     state = create_train_state(rng, config, vocab_size)
     model_name = config['model']['type']
     checkpoint_dir = os.path.abspath(os.path.join('experiments', 'model_checkpoints', model_name))
-    state = checkpoints.restore_checkpoint(ckpt_dir=checkpoint_dir, target=state, prefix='checkpoint_7')
+    state = checkpoints.restore_checkpoint(ckpt_dir=checkpoint_dir, target=state, prefix='checkpoint_3')
     return state
 
 def generate(state, config, tokenizer, prompt, max_length=10):
