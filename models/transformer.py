@@ -31,7 +31,6 @@ def scaled_dot_product(q, k, v, mask=None):
     if mask is not None:
         attn_logits = jnp.where(mask == 0, -9e15, attn_logits)
     attention = nn.softmax(attn_logits, axis=-1)
-    print(attention)
     values = jnp.matmul(attention, v)
     return values, attention
 
@@ -99,6 +98,7 @@ class TransformerBlock(nn.Module):
     @nn.compact
     def __call__(self, x, training):
         _, seq_length,_ = x.shape
+        
         attention = MultiheadAttention(num_heads=self.n_heads,  embed_dim = self.d_model)
         attn_output,_ = attention(x,mask=create_causal_mask(seq_length))
         x = x + nn.Dropout(rate=self.dropout)(attn_output, deterministic=not training)
@@ -121,7 +121,9 @@ class TransformerModel(nn.Module):
 
     @nn.compact
     def __call__(self, x, training):
+        positional_encoding = PositionalEncoding(self.d_model)
         x = nn.Embed(num_embeddings=self.vocab_size, features=self.d_model)(x)
+        x = positional_encoding(x)
         
         for _ in range(self.n_layers):
             x = TransformerBlock(

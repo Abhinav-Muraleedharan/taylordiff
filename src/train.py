@@ -27,7 +27,10 @@ def create_train_state(rng, config, vocab_size):
 def train_step(state, batch, rng):
     def loss_fn(params):
         logits = state.apply_fn({'params': params}, batch['input_ids'], training=True, rngs={'dropout': rng})
-        return optax.softmax_cross_entropy_with_integer_labels(logits, batch['input_ids']).mean()
+        shifted_logits = logits[:, :-1, :]
+        shifted_targets = batch['input_ids'][:, 1:]
+        loss = optax.softmax_cross_entropy_with_integer_labels(shifted_logits, shifted_targets).mean()
+        return  loss 
 
     grad_fn = jax.value_and_grad(loss_fn)
     loss, grads = grad_fn(state.params)
@@ -36,7 +39,9 @@ def train_step(state, batch, rng):
 
 def eval_step(state, batch):
     logits = state.apply_fn({'params': state.params}, batch['input_ids'], training=False)
-    loss = optax.softmax_cross_entropy_with_integer_labels(logits, batch['input_ids']).mean()
+    shifted_logits = logits[:, :-1, :]
+    shifted_targets = batch['input_ids'][:, 1:]
+    loss = optax.softmax_cross_entropy_with_integer_labels(shifted_logits, shifted_targets).mean()
     return loss
 
 def train_model(config, train_dataset, val_dataset, vocab_size):
