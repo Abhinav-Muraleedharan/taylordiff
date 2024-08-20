@@ -1,0 +1,103 @@
+WARNING:absl:Tensorflow library not found, tensorflow.io.gfile operations will use native shim calls. GCS paths (i.e. 'gs://...') cannot be accessed.
+wandb: Currently logged in as: abhi98m. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.17.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.6
+wandb: Run data is saved locally in /home/ubuntu/rbg-group/abhi98m/taylordiff/wandb/run-20240819_203933-ioeqo9cz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run prime-leaf-24
+wandb: ⭐️ View project at https://wandb.ai/abhi98m/taylordiff
+wandb: 🚀 View run at https://wandb.ai/abhi98m/taylordiff/runs/ioeqo9cz
+2024-08-19 20:39:41.850586: W external/xla/xla/service/gpu/nvptx_compiler.cc:836] The NVIDIA driver's CUDA version is 12.4 which is older than the PTX compiler version (12.6.20). Because the driver is older than the PTX compiler version, XLA is disabling parallel compilation, which may slow down compilation. You should update your NVIDIA driver or use the NVIDIA-provided CUDA forward compatibility packages.
+Epoch 1/100: 0it [00:00, ?it/s]Epoch 1/100: 0it [00:05, ?it/s]
+Traceback (most recent call last):
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 18, in <module>
+    main()
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/main.py", line 13, in main
+    trained_state = train_model(config, train_dataset, val_dataset, vocab_size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 66, in train_model
+    state, loss = train_step(state, batch, step_rng)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/rbg-group/abhi98m/taylordiff/src/train.py", line 37, in train_step
+    loss, grads = grad_fn(state.params)
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/traceback_util.py", line 180, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/api.py", line 707, in value_and_grad_f
+    g = vjp_py(lax_internal._one(ans))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/tree_util.py", line 476, in __call__
+    return self.fun(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/api.py", line 2119, in _vjp_pullback_wrapper
+    ans = fun(*args)
+          ^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/tree_util.py", line 476, in __call__
+    return self.fun(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/interpreters/ad.py", line 150, in unbound_vjp
+    arg_cts = backward_pass(jaxpr, True, consts, dummy_args, cts)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/interpreters/ad.py", line 250, in backward_pass
+    cts_out = reducing_transposes[eqn.primitive](
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/pjit.py", line 2294, in _pjit_transpose
+    nz_cts_out = pjit_p.bind(
+                 ^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/core.py", line 2739, in bind
+    return self.bind_with_trace(top_trace, args, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/core.py", line 433, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/core.py", line 939, in process_primitive
+    return primitive.impl(*tracers, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/pjit.py", line 1730, in _pjit_call_impl
+    return xc._xla.pjit(
+           ^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/pjit.py", line 1712, in call_impl_cache_miss
+    out_flat, compiled = _pjit_call_impl_python(
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/pjit.py", line 1642, in _pjit_call_impl_python
+    ).compile(compile_options)
+      ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/interpreters/pxla.py", line 2295, in compile
+    executable = UnloadedMeshExecutable.from_hlo(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/interpreters/pxla.py", line 2807, in from_hlo
+    xla_executable = _cached_compilation(
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/interpreters/pxla.py", line 2621, in _cached_compilation
+    xla_executable = compiler.compile_or_get_cached(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/compiler.py", line 399, in compile_or_get_cached
+    return _compile_and_write_cache(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/compiler.py", line 627, in _compile_and_write_cache
+    executable = backend_compile(
+                 ^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/profiler.py", line 336, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/jax/_src/compiler.py", line 267, in backend_compile
+    return backend.compile(built_c, compile_options=options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Exception ignored in atexit callback: <function _Manager._atexit_setup.<locals>.<lambda> at 0x75d4937b3ec0>
+Traceback (most recent call last):
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/wandb/sdk/wandb_manager.py", line 179, in <lambda>
+    self._atexit_lambda = lambda: self._atexit_teardown()
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/wandb/sdk/wandb_manager.py", line 193, in _atexit_teardown
+    self._teardown(self._hooks.exit_code if self._hooks else 0)
+  File "/home/abhi98m/anaconda3/envs/taylordiff/lib/python3.12/site-packages/wandb/sdk/wandb_manager.py", line 174, in _teardown
+    return self._service.join()
+           ^^^^^^^^^KeyboardInterrupt: 
+wandb: - 0.025 MB of 0.025 MB uploadedwandb: \ 0.025 MB of 0.039 MB uploadedwandb: 🚀 View run prime-leaf-24 at: https://wandb.ai/abhi98m/taylordiff/runs/ioeqo9cz
+wandb: ⭐️ View project at: https://wandb.ai/abhi98m/taylordiff
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240819_203933-ioeqo9cz/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

@@ -2,6 +2,7 @@ import os
 import jax
 import optax
 import wandb
+import orbax.checkpoint
 import jax.numpy as jnp
 from tqdm import tqdm
 from flax.training import checkpoints
@@ -26,7 +27,7 @@ def create_train_state(rng, config, vocab_size):
 
 def train_step(state, batch, rng):
     def loss_fn(params):
-        logits = state.apply_fn({'params': params}, batch['input_ids'], training=True, rngs={'dropout': rng})
+        logits,_ = state.apply_fn({'params': params}, batch['input_ids'], training=True, rngs={'dropout': rng})
         shifted_logits = logits[:, :-1, :]
         shifted_targets = batch['input_ids'][:, 1:]
         loss = optax.softmax_cross_entropy_with_integer_labels(shifted_logits, shifted_targets).mean()
@@ -38,13 +39,14 @@ def train_step(state, batch, rng):
     return state, loss
 
 def eval_step(state, batch):
-    logits = state.apply_fn({'params': state.params}, batch['input_ids'], training=False)
+    logits,_  = state.apply_fn({'params': state.params}, batch['input_ids'], training=False)
     shifted_logits = logits[:, :-1, :]
     shifted_targets = batch['input_ids'][:, 1:]
     loss = optax.softmax_cross_entropy_with_integer_labels(shifted_logits, shifted_targets).mean()
     return loss
 
 def train_model(config, train_dataset, val_dataset, vocab_size):
+    save_checkpoints = [10,11]
     rng = jax.random.PRNGKey(0)
     rng, init_rng = jax.random.split(rng)
 
@@ -79,14 +81,10 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
         print(f"Epoch {epoch+1}: Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
         # save checkpoint:
-        checkpoints.save_checkpoint(
-            ckpt_dir=checkpoint_dir,
-            target=state,
-            step=epoch,
-            keep=3,  # Keep the 3 best checkpoints
-            overwrite=True
-        )
-        print("Succesfully saved checkpoint")
+        if epoch in save_checkpoints:
+            orbax_checkpointer = orbax.checkpoint.PyTreeCheckpointer()
+            orbax_checkpointer.save(os.path.join(checkpoint_dir,f'epoch_{epoch}'),state)
+            print("Succesfully saved checkpoint")
 
         wandb.log({
             "epoch": epoch + 1,

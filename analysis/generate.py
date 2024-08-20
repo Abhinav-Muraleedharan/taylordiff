@@ -3,7 +3,7 @@ import jax
 import jax.numpy as jnp
 import optax
 from flax.training import train_state
-from flax.training import checkpoints
+import orbax.checkpoint
 from transformers import AutoTokenizer
 import yaml
 from models import get_model
@@ -31,15 +31,15 @@ def create_train_state(rng, config, vocab_size):
     return train_state.TrainState.create(apply_fn=model.apply, params=params, tx=tx)
 
 def load_model(config, vocab_size):
-    rng = jax.random.PRNGKey(0)
     # state = create_train_state(rng, config, vocab_size)
     model_name = config['model']['type']
-    checkpoint_dir = os.path.abspath(os.path.join('experiments', 'model_checkpoints', model_name))
-    params = checkpoints.restore_checkpoint(ckpt_dir=checkpoint_dir, target=None, prefix='checkdghdpoint_2')
-    print(params)
+    checkpoint_path = '/home/abhi98m/backed_up/taylordiff/experiments/model_checkpoints/transformer/epoch_0'
+    orbax_checkpointer =  orbax.checkpoint.PyTreeCheckpointer()
+    params =  orbax_checkpointer.restore(checkpoint_path)
+    # print(params)
     return params
 
-def generate(params, config, tokenizer, prompt, max_length=10):
+def generate(params, config, tokenizer, prompt, max_length=20):
     model = create_model(config, tokenizer.vocab_size)
     
     @jax.jit
@@ -68,9 +68,9 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(config['tokenizer']['name'])
     _, _, vocab_size = load_and_preprocess_data(config)
     params = load_model(config, vocab_size)
-    print(params)
-    prompt = "Wikitext "
-    generated_text = generate(params, config, tokenizer, prompt)
+    # print(params)
+    prompt = "Please note restoration time will"
+    generated_text = generate(params['params'], config, tokenizer, prompt)
     print(f"Generated text:\n{generated_text}")
 
 if __name__ == "__main__":

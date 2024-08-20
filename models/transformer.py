@@ -9,7 +9,6 @@ def create_causal_mask(seq_length):
     """Create a causal mask for the attention mechanism."""
     return jnp.triu(jnp.ones((seq_length, seq_length)), k=1) == 0
 
-
 # Helper function to support different mask shapes.
 # Output shape supports (batch_size, number of heads, seq length, seq length)
 # If 2D: broadcasted over batch size and number of heads
@@ -100,7 +99,7 @@ class TransformerBlock(nn.Module):
         _, seq_length,_ = x.shape
         
         attention = MultiheadAttention(num_heads=self.n_heads,  embed_dim = self.d_model)
-        attn_output,_ = attention(x,mask=create_causal_mask(seq_length))
+        attn_output,attention_maps = attention(x,mask=create_causal_mask(seq_length))
         x = x + nn.Dropout(rate=self.dropout)(attn_output, deterministic=not training)
         x = nn.LayerNorm()(x)
         ff_output = nn.Dense(self.d_ff)(x)
@@ -109,7 +108,7 @@ class TransformerBlock(nn.Module):
         x = x + nn.Dropout(rate=self.dropout)(ff_output, deterministic=not training)
         x = nn.LayerNorm()(x)
         
-        return x
+        return x, attention_maps
 
 class TransformerModel(nn.Module):
     vocab_size: int
@@ -124,14 +123,15 @@ class TransformerModel(nn.Module):
         positional_encoding = PositionalEncoding(self.d_model)
         x = nn.Embed(num_embeddings=self.vocab_size, features=self.d_model)(x)
         x = positional_encoding(x)
-        
+        all_attention_maps = []
         for _ in range(self.n_layers):
-            x = TransformerBlock(
+            x,attention_maps = TransformerBlock(
                 d_model=self.d_model,
                 n_heads=self.n_heads,
                 d_ff=self.d_ff,
                 dropout=self.dropout
             )(x, training)
+            all_attention_maps.append(attention_maps)
         
         logits = nn.Dense(self.vocab_size)(x)
-        return logits
+        return logits,all_attention_maps

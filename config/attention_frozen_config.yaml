@@ -1,0 +1,28 @@
+project:
+  name: "taylordiff"
+
+model:
+  type: "frozen_transformer"  # Options: "transformer", "gpt2", "gemma"
+  d_model: 256
+  n_heads: 4
+  d_ff: 1024
+  n_layers: 2
+  dropout: 0.1
+
+training:
+  batch_size: 32
+  learning_rate: 0.0001
+  num_epochs: 100
+  max_seq_length: 128
+
+data:
+  dataset_name: "wikitext"
+  dataset_config: "wikitext-2-raw-v1"
+
+tokenizer:
+  name: "google/gemma-2b"
+
+
+
+
+  
