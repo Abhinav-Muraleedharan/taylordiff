@@ -66,6 +66,7 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
             rng, step_rng = jax.random.split(rng)
             state, loss = train_step(state, batch, step_rng)
             train_loss += loss
+            print(train_loss)
 
         train_loss /= len(train_dataset) // config['training']['batch_size']
         train_losses.append(train_loss)

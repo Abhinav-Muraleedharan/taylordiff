@@ -1,3 +1,4 @@
+import yaml
 import math
 import jax
 import numpy as np
@@ -10,9 +11,7 @@ from .transformer import PositionalEncoding, TransformerBlock, TransformerModel
 
 
 def create_model(config, vocab_size):
-    model = TransformerModel(
-        config['model']['type'],
-        vocab_size=vocab_size,
+    model = TransformerModel(vocab_size=vocab_size,
         d_model=config['model']['d_model'],
         n_heads=config['model']['n_heads'],
         d_ff=config['model']['d_ff'],
@@ -107,11 +106,16 @@ class FrozenTransformerModel(nn.Module):
     d_ff: int
     n_layers: int
     dropout: float
+    def setup(self):
+        with open('config/attention_frozen_config.yaml', 'r') as f:
+            config = yaml.safe_load(f)
+        self.base_model =  create_model(config = config,vocab_size=self.vocab_size)
+
     @nn.compact
     def __call__(self, x, training):
+        
         params = load_model()
-        base_model = create_model()
-        _ ,attention_map_list = base_model.apply({'params': params}, x, training=True)
+        _ ,attention_map_list = self.base_model.apply({'params': params}, x, training=False)
         positional_encoding = PositionalEncoding(self.d_model)
         x = nn.Embed(num_embeddings=self.vocab_size, features=self.d_model)(x)
         x = positional_encoding(x)
