@@ -10,6 +10,7 @@ from flax.training import train_state
 from models import get_model
 from .utils import plot_loss_curves, plot_spectral_dynamics, log_attention_heatmaps
 
+
 def create_train_state(rng, config, vocab_size):
     model = get_model(
         config['model']['type'],
@@ -46,7 +47,7 @@ def eval_step(state, batch):
     return loss
 
 def train_model(config, train_dataset, val_dataset, vocab_size):
-    save_checkpoints = [10,11]
+    save_checkpoints = [0,20]
     rng = jax.random.PRNGKey(0)
     rng, init_rng = jax.random.split(rng)
 
