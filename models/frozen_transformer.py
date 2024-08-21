@@ -110,12 +110,11 @@ class FrozenTransformerModel(nn.Module):
         with open('config/attention_frozen_config.yaml', 'r') as f:
             config = yaml.safe_load(f)
         self.base_model =  create_model(config = config,vocab_size=self.vocab_size)
+        self.base_model_params = load_model()
 
     @nn.compact
     def __call__(self, x, training):
-        
-        params = load_model()
-        _ ,attention_map_list = self.base_model.apply({'params': params}, x, training=False)
+        _ ,attention_map_list = self.base_model.apply({'params': self.base_model_params}, x, training=False)
         positional_encoding = PositionalEncoding(self.d_model)
         x = nn.Embed(num_embeddings=self.vocab_size, features=self.d_model)(x)
         x = positional_encoding(x)

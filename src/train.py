@@ -26,6 +26,8 @@ def create_train_state(rng, config, vocab_size):
     tx = optax.adam(config['training']['learning_rate'])
     return train_state.TrainState.create(apply_fn=model.apply, params=params, tx=tx)
 
+
+
 def train_step(state, batch, rng):
     def loss_fn(params):
         logits,_ = state.apply_fn({'params': params}, batch['input_ids'], training=True, rngs={'dropout': rng})
@@ -33,11 +35,11 @@ def train_step(state, batch, rng):
         shifted_targets = batch['input_ids'][:, 1:]
         loss = optax.softmax_cross_entropy_with_integer_labels(shifted_logits, shifted_targets).mean()
         return  loss 
-
     grad_fn = jax.value_and_grad(loss_fn)
     loss, grads = grad_fn(state.params)
     state = state.apply_gradients(grads=grads)
     return state, loss
+
 
 def eval_step(state, batch):
     logits,_  = state.apply_fn({'params': state.params}, batch['input_ids'], training=False)
@@ -66,7 +68,7 @@ def train_model(config, train_dataset, val_dataset, vocab_size):
             rng, step_rng = jax.random.split(rng)
             state, loss = train_step(state, batch, step_rng)
             train_loss += loss
-            print(train_loss)
+            print(loss)
 
         train_loss /= len(train_dataset) // config['training']['batch_size']
         train_losses.append(train_loss)
